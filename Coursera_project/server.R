@@ -8,19 +8,21 @@
 #
 
 library(shiny)
+library(ggplot2)
+library(dplyr)
 
-# Define server logic required to draw a histogram
-shinyServer(function(input, output) {
+data <- data.frame(read.csv('data_neighborhood.csv'))
+data2 <- subset(data, !is.na(number_of_reviews)) 
+data3 <- subset(data2, !is.na(price))
 
-    output$distPlot <- renderPlot({
-
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-
+server <- function(input, output) {
+    output$plot <- renderPlot({
+        filtered <-
+            data3 %>%
+            filter(price >= input$priceInput[1],
+                   price <= input$priceInput[2],
+            )
+        ggplot(filtered, aes(minimum_nights)) +
+            geom_histogram()
     })
-
-})
+}
