@@ -1,0 +1,39 @@
+Shiny application Coursera Course
+========================================================
+author: Simone Bom
+date: 13-12-2019
+autosize: true
+
+
+Goal of slides
+========================================================
+
+1. Must be done in Rstudio Presenter or Slidy
+2. Must be 5 pages
+3. Must be hosted on Github or Rpubs
+4. Must contained some embedded R code that gets run when slidifying the document
+
+
+Slide With Code
+========================================================
+The data set used for making the shiny application is a data set with the airbnb marktet in Madrid. The first column names are given in the overview below. 
+
+```{r, echo = FALSE}
+data <- data.frame(read.csv('data_neighborhood.csv'))
+colnames(data)
+```
+
+Slide With Plot
+========================================================
+Next we give a plot of the data with the number of reviews plotted against the price of the airbnb.
+
+```{r, echo=FALSE}
+data2 <- subset(data, !is.na(number_of_reviews)) 
+data3 <- subset(data2, !is.na(price))
+
+plot(data3$price, data3$number_of_reviews, xlab = 'Price', ylab = 'Number of reviews', xlim = c(0,1000), ylim = c(0,200))
+```
+
+Shiny application 
+========================================================
+The links to the shiny application can be found on the following pages. 
